@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>เข้ารหัส / ถอดรหัส Unicode</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      border: 2px solid black;
+      background: #f0f8ff;
+    }
+    
+    textarea {
+      width: 90%;
+      height: 400px;
+      margin-bottom: 20px;
+      border: 2px solid black;
+      font-size: 16px;
+      padding: 10px;
+    }
+    
+    button {
+      padding: 10px 80px;
+      background-color: #89CFF0;
+      border: 2px solid black;
+      font-size: 16px;
+      margin: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #5bb2e6;
+    }
+    
+    .hr {
+      border: 1.5px solid black;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<hr class="hr">
+    
+<h1>เข้ารหัส / ถอดรหัส Unicode by [ERROR 0999cc] TH [official]</h1>
+  
+<hr class="hr">
+
+<textarea id="inputText" placeholder="พิมพ์ข้อความที่นี่..."></textarea>
+<br>
+<button onclick="encode()">[ เข้ารหัส ]</button>
+<button onclick="decode()">[ ถอดรหัส ]</button>
+<button onclick="copyOutput()">[ คัดลอกผลลัพธ์ ]</button>
+<br><br>
+<textarea id="outputText" placeholder="ผลลัพธ์..."></textarea>
+<br>
+
+<script>
+  function encode() {
+    const input = document.getElementById("inputText").value;
+    let encoded = '';
+
+    for (let i = 0; i < input.length; i++) {
+      encoded += '/u' + input.charCodeAt(i).toString(16).padStart(4, '0') + '/';
+    }
+
+    document.getElementById("outputText").value = encoded;
+  }
+
+  function decode() {
+    const input = document.getElementById("inputText").value;
+    const decoded = input.replace(/\/u([0-9a-fA-F]{4})\//g, (match, code) => {
+      return String.fromCharCode(parseInt(code, 16));
+    });
+
+    document.getElementById("outputText").value = decoded;
+  }
+
+  function copyOutput() {
+    const output = document.getElementById("outputText");
+    output.select();
+    document.execCommand('copy');
+    alert("[ คัดลอกข้อความสำเร็จ ]");
+  }
+</script>
+
+</body>
+</html>
